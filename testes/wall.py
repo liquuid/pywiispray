@@ -25,6 +25,17 @@ class Wall(window.Window):
         
             self.flip()
 
+class Sprite(object):
+
+    def __init__(self,image_file,image_data=None, **kwards):
+        self.image_file = image_file
+        if (image_data is None):
+            self.image = helper.load_image(image_file)
+        else:
+            self.image = image_data
+        self.x = 0
+        self.y = 0
+
 if __name__ == "__main__":
     
     w = Wall()
