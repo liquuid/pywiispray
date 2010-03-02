@@ -1,0 +1,55 @@
+Sintaxe básica :
+
+- linhas terminam com \n (enter)
+- é possível quebrar a linha para facilitar a leitura fisicamente, sem comprometer a linha lógica.
+- ou ainda quebrar expressões que usam parenteses, colchetes ou chaves
+
+- identação usando tabs
+
+- case sensitive
+
+* variaveis
+
+- strings
+- unicode u'café'
+
+- números : 123 decimal , 0123 octal , 0x00f3 hexadecimal , 324L longo , 3.14 float
+- operadores + , -  ... 
+
+- tipagem dinâmica 
+- criação de uma variável com uma simples atribuição
+- garbage collector
+
+
+* if, else
+
+- 0 retorna falso
+- vazios retornam falso
+
+* for , while
+
+d = { "a": 1 , "b" : 2 }
+for chave , valor in d . iteritems ():
+print " Chave : " , chave , " , Valor : " , valor
+ 
+- continue => pula para a próxima iteração
+- break => pula fora do laço
+
+* listas
+
+- lista.sort()
+- lista.reverse()
+- lista.count(3)
+- lista.insert(0,"123")
+- del lista[1]
+- len(lista)
+
+
+* classes e orientação a objetos
+- o que é ?
+- self ?
+- como criar
+- como destruir
+
+
+

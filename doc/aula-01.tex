@@ -1,0 +1,410 @@
+% -*- mode: latex -*-
+% -*- coding: latin-1 -*-
+
+% LICENSE: GNU GPL-2
+% AUTHOR.: Gustavo Sverzut Barbieri <barbieri@gmail.com>
+% URL....: http://palestras.gustavobarbieri.com.br/python-5hs
+
+\documentclass{beamer}
+
+\usepackage{beamerthemesplit}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps}
+\usepackage{amsmath,amssymb}
+
+
+ \usetheme{Antibes} % low layout overhead  (just top)
+% \usetheme{Berkeley} % medium layout overhead
+% \usetheme{Berlin}
+% \usetheme{Bergen}
+% \usetheme{Boadilla}  % very low layout overhead
+% \usetheme{Copenhagen}
+% \usetheme{Darmstadt}
+% \usetheme{Dresden}
+% \usetheme{Frankfurt}
+% \usetheme{Goettingen} % great
+% \usetheme{Hannover}
+% \usetheme{Ilmenau}
+% \usetheme{JuanLesPins}
+% \usetheme{Luebeck}
+% \usetheme{Madrid}
+% \usetheme{Malmoe}
+% \usetheme{Marburg} % great
+% \usetheme{Montpellier}
+% \usetheme{PaloAlto}
+% \usetheme{Pittsburgh}
+% \usetheme{Rochester}
+% \usetheme{Singapore}
+% \usetheme{Szeged}
+% \usetheme{Warsaw} % great
+% \usetheme{Darmstadt}
+
+
+%\usefonttheme{structurebold}
+\usefonttheme{professionalfonts}
+
+%\usecolortheme{albatross} % dark blue
+% \usecolortheme{beetle} % grey + blue
+% \usecolortheme{crane} % yellow
+% \usecolortheme{default}
+% \usecolortheme{dolphin} % light purple + white
+\usecolortheme{dove} % b&w, excellent to print
+% \usecolortheme{fly} % all grey
+% \usecolortheme{lily} % dark blue
+% \usecolortheme{orchid} % dark blue
+% \usecolortheme{rose} % yet another blue
+% \usecolortheme{seagull} % white and grey
+% \usecolortheme{seahorse} % light purple
+% \usecolortheme{whale}
+
+
+\title{Python vapit ! vupit !}
+\subtitle{Introdução à Linguagem, História e Propaganda}
+\author{Fernando Henrique}
+\institute{liquuid.net}
+
+
+
+\begin{document}
+
+  \lstset{
+    frame=single,
+    showstringspaces=false,
+    extendedchars=true,
+    language=Python,
+    backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+    rulecolor=\color[rgb]{0.3,0.3,0.3},
+    basicstyle=\color[rgb]{0,0,0}\small\upshape\ttfamily,
+    commentstyle=\color[rgb]{0.5,0.0,0.0}\rmfamily\itshape,
+    keywordstyle=\color[rgb]{0.7,0.0,0.8}\bfseries,
+    stringstyle=\color[rgb]{0.6,0.4,0.4},
+    identifierstyle=\color[rgb]{0.2,0.2,0.8}
+ }
+
+
+
+\frame{\titlepage}
+
+%\begin{abstract}
+%  Esta é a aula introdutória à linguagem Python. Aborda-se um pouco da
+%  história, faz-se uma propaganda da linguagem, mostra-se comentários
+%  sobre ela e também uma explicação breve sobre a comunidade que dela
+%  cuida.
+
+%  \vspace{1em}
+
+ % Não será abordado qualquer tipo de código ou construção sintática,
+ % apenas os aspectos filosófico e cultural que são peças importantes
+%  para um desenvolvedor Python.
+%\end{abstract}
+
+%\section<presentation>*{Outline}
+
+
+\section{Introdução}
+\subsection{Nascimento do Python}
+
+\begin{frame}
+  \frametitle{Onde e Quando}
+  \begin{itemize}
+  \item Criada em 1989 pelo holandês \textbf{Guido van Rossum} no
+    \emph{Centrum voor Wiskunde en Informatica} (CWI), em Amsterdã,
+    Holanda.
+  \item Influenciada pela linguagem ABC, desenvolvida no CWI por Guido
+    e outros nas décadas de 70 e 80. ABC tinha um foco bem definido:
+    ser uma linguagem de
+    programação para usuários inteligentes de computadores que não
+    eram programadores: Físicos, Cientistas Sociais e até Linguistas.
+  \item O projeto de sistema operacional distribuído Amoeba precisava
+    de uma linguagem de \emph{script}. Nasce o Python.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bases do Python}
+  \begin{itemize}
+  \item Elementos que eram bem sucedidos no ABC.
+  \item Estruturas de dados poderosas inclusas: Listas,
+    Dicionários, \emph{Strings}.
+  \item Usar indentação para delimitar blocos, eliminando chaves.
+  \item Fácil extensão (lição aprendida com os erros do ABC).
+  \item Fácil de portar: além do Amoeba, gostaria de executar em
+    Unix, Macintosh e Windows.
+  \item Influências de Modula-2 e Modula-3: módulos e \emph{namespaces}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ambiente de Concepção}
+
+  \begin{itemize}
+  \item \textbf{Universidade:} pessoas altamente especializadas para
+    desenvolver e opinar sobre os elementos do projeto
+  \item \textbf{Descontraído:} o nome Python vem da série de humor
+  \textit{Monty Python's Flying Circus}
+  \item \textbf{Sem prazos, Sem pressão:} o desenvolvimento não foi
+    pressionado por estratégias de marketing, prazos, clientes ou
+    qualquer outro fator que pudesse influenciar nas decisões de
+    projeto, \textbf{resultando em maior qualidade.}
+  \item \textbf{Software Livre:} garante a vida da tecnologia.
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Sobre a Linguagem}
+\begin{frame}
+  \frametitle{Características Básicas}
+  \begin{itemize}
+  \item \textbf{Interpretada:} usa máquina virtual, facilita
+    portabilidade.
+  \item \textbf{Interativa:} pode-se programar interativamente, os
+    comandos são executados enquanto são digitados.Por exemplo usando o ipython que facilita testes,
+    desenvolvimento rápido e outros. Facilitadores estão presentes
+    \lstinline|help(obj)|.
+  \item \textbf{Orientada a Objetos:} tudo\footnote{Quase tudo é um
+    objeto :-)} é objeto: números, \emph{strings}, funções, classes,
+    instâncias, métodos, ...
+  \item \textbf{Fortemente Tipada:} Não existe \emph{casts} e nem
+    conversão automática, não se mistura tipos
+    ``automagicamente''.
+  \item \textbf{Tipagem Dinâmica:} A tipagem de um objeto é feita em
+    tempo de execução. Um objeto tem tipo, uma variável não.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Características Importantes}
+  \begin{itemize}
+  \item Sintaxe clara, sem caracteres ``inúteis'':
+    \begin{itemize}
+      \item blocos são marcados por indentação
+      \item parênteses são opcionais, só precisam ser utilizados para
+	eliminar ambiguidades.
+      \item palavras-chave (\emph{keywords}) e formações que ajudam na
+	leitura, como \lstinline|for ... in ...|.
+    \end{itemize}
+
+  \item Fácil extensão: codificar nos módulos é muito fácil, podendo
+    utilizar bibliotecas nativas, aproveitando desempenho,
+    características nativas das plataformas, etc.
+    \begin{itemize}
+    \item API Python/C é bem simples
+    \item Diversos conversores automáticos (SWIG, SIP, ...)
+    \item \textbf{Jython:} usando Python em Java e vice-versa.
+    \item \textbf{PyRex:} pseudo linguagem para facilitar integração
+      Python + C/C++.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Características Importantes (2)}
+  \begin{itemize}
+  \item \textbf{Tipos básicos poderosos:} listas, dicionários
+    (\emph{hash tables}), \emph{strings}, ... otimizados e de fácil
+    uso.
+  \item \textbf{Baterias Inclusas:} biblioteca padrão contém diversos
+    recursos úteis: Interface Gráfica (Tk), XML, Servidores (TCP, UDP,
+    HTTP, ...), HTML, protocolos de internet (email, http, ...),
+    xmlrpc, ...
+  \item Grande base de código e bibliotecas de terceiros
+  \item Grande comunidade de desenvolvedores
+  \item \textbf{Software Livre:} liberdade de uso,
+    distribuição. Licença própria, compatível com GPL, porém pode
+    distribuir somente o binário.
+  \item \textbf{Independente:} a entidade sem fins lucrativos Python
+    Software Foundation cuida da propriedade intelectual do Python.
+  \end{itemize}
+\end{frame}
+
+
+
+
+\section{Propaganda}
+\subsection{Quem Usa?}
+
+\begin{frame}
+  \frametitle{No Brasil}
+  \begin{itemize}
+  \item \textbf{Embratel:} monitoramento das interfaces de \emph{backbone} e
+    clientes de internet, também existem \emph{scripts} de uso
+    interno.
+  \item \textbf{CPqD:} monitoramento de centrais telefônicas.
+  \item \textbf{Async:} desenvolvimento de software de automação comercial
+  \item \textbf{GPr Sistemas:} Desenvolvimento de aplicações sob encomenda,
+    sistemas como monitoramento de transporte terrestre via satélite
+    são as soluções já feitas
+  \item \textbf{Outras} que utilizam o Python para sistemas Web, como Varig,
+    Serpro, Câmara, Interlegis, ...
+  \end{itemize}
+
+  Os sistemas web de gestão de conteúdo usando o trio
+  Python/Zope/Plone vem crescendo a cada dia, principalmente em
+  empresas grandes e no governo.
+\end{frame}
+
+\begin{frame}
+  \frametitle{No Mundo}
+  \begin{itemize}
+  \item \textbf{Industrial Light \& Magic:} automação interna:
+    \textit{``Python plays a key role in our production
+      pipeline. Without it a project the size of Star Wars: Episode II
+      would have been very difficult to pull off. From crowd rendering
+      to batch processing to compositing, Python binds all things
+      together''}
+  \item \textbf{NASA:} repositório de CAD/CAE/PDM, gerência de modelos,
+    integração e sistema colaborativo: \textit{``We chose Python
+      because it provides maximum productivity, code that's clear and
+      easy to maintain, strong and extensive (and growing!) libraries,
+      and excellent capabilities for integration with other
+      applications on any platform.''}
+  \item \textbf{University of Maryland:} ensino: \textit{``I have the
+      students learn Python in our undergraduate and graduate Semantic
+      Web courses. Why? Because basically there's nothing else with
+      the flexibility and as many web libraries''}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{No Mundo (2)}
+  \begin{itemize}
+  \item \textbf{Apple:} ferramenta padrão desde o MacOS X.
+  \item \textbf{Microsoft:} investimento no IronPython para a
+    plataforma .NET.
+  \item \textbf{Disney:} jogos e Sistemas internos de automação e
+    criação, patrocínio do PyQT.
+  \item \textbf{Bank Boston:} sistema Web usando Python e Zope.
+  \item \textbf{Nokia:} sistema de programação para celulares da série
+    60, permite mais recursos que o Java.
+  \item \textbf{Atari:} jogos, como ``Temple of Elemental Evil''.
+  \item \textbf{Yahoo!:} Yahoo! Groups foi escrito inicialmente em
+    puro python: 180.000 linhas de código cuidavam de tudo, tratando
+    mais de 200 mensagens/segundo em um simples Pentium 400Mhz.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{No Mundo (3)}
+  \begin{itemize}
+  \item \textbf{Nortel:} sistemas web ``ChartWare'', ``WebBook'' e
+    ``WebTrack'' são exemplos.
+  \item \textbf{Philips:} automação da linha de semicondutores na
+    fábrica de Fishkill.
+  \item \textbf{Lawrence Livermore National Laboratories:} ambiente de
+    engenharia numérica.
+  \item \textbf{Red Hat:} diversas ferramentas para linux, o
+    instalador das distribuições Red Hat e Fedora (``Anaconda'').
+  \item \textbf{Gentoo Linux:} sistema de gerência de pacotes
+    ``Portage''.
+  \item \textbf{Blender3D:} software pode ser estendido usando plugins
+    Python.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{No Mundo: Google}
+  Maior \textit{``case''} Python da atualidade:
+
+  \vspace{2em}
+
+  \textit{"Python has been an important part of Google since the
+    beginning, and remains so as the system grows and evolves. Today
+    dozens of Google engineers use Python, and we're looking for more
+    people with skills in this language."} --- Peter Norvig, director
+  of search quality at Google, Inc.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{No Mundo: Google (2)}
+
+  \begin{itemize}
+  \item Sistema de ajuda do GMail
+  \item Google Groups
+  \item Sistema de compilação de aplicativos (\textit{build system}).
+  \item Sistema de empacotamento e entrega de dados (\textit{packaging
+      system}).
+
+  \item Sistema de monitoramento e manutenção do cluster
+  \item Sistema de testes
+  \item Análise de registros (\textit{logs}), ié análise de falsos
+    clicks no \textit{Sponsored Ads}.
+  \item Prototipação
+  \item Recentemente liberando código em \url{http://code.google.com},
+    como Goopy.
+  \item Requisito para contratar profissionais Java: saber Python! :-)
+  \end{itemize}
+\end{frame}
+
+
+
+
+
+\subsection{Opiniões sobre o Python e Comparações}
+
+\begin{frame}
+  \frametitle{Bruce Eckel}
+
+  Bruce Eckel é o autor de livros de renome, como ``Thinking in Java''
+  e ``Thinking in C++'', mas hoje prefere pensar em Python. Ele
+  apresentou 10 razões por que ele ama esta linguagem, algumas delas:
+
+  \begin{itemize}
+  \item \textbf{Python is about me}
+    \begin{itemize}
+    \item Outras linguagens: \textit{``Sim, nós estamos tentando fazer sua
+        vida mais fácil com esta linguagem, mas estas coisas são mais
+        importantes''}.
+    \item Python: \textit{``Nós tentamos fazer sua vida mais fácil, e
+        é isto. Fazer sua vida mais fácil é o que não vamos
+        comprometer.''}.
+    \item \textbf{Exemplo:} C++ tentou fazer a vida do desenvovedor
+      mais fácil, porém comprometimentos com performance e
+      compatibilidade com C++, o que não ajudou em muito a vida do
+      desenvolvedor. Qualquer problema do C++ pode ser explicado
+      devido a estas duas características.
+    \item \textbf{Exemplo:} Java achou que o marketing era mais importante.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Bruce Eckel (2)}
+  \vspace{-1em}
+
+  \begin{itemize}
+  \item \textbf{Menos Porcaria:} Dizem que uma pessoa armazena $7 \pm
+    2$ informações ao mesmo tempo, quanto menos porcaria, melhor.
+    \begin{itemize}
+    \item \textbf{Java:} 3 passos para abrir um arquivo. Muito mais para iterar
+      sobre suas linhas.
+    \item \textbf{Python:} 1 chamada para abrir um
+      arquivo. Construções fáceis para iterar sobre o conteudo:
+      \lstinline|for line in file('fname').readlines(): print line|.
+    \item A falta de caracteres inúteis e a obrigatoriedade de uma
+      identação consistente também ajuda a se concentrar no problema.
+    \end{itemize}
+
+  \item \textbf{Produtividade é mais importante que performance:}
+    otimizar prematuramente é um grande erro.
+    \begin{itemize}
+    \item A maioria dos programas não precisa de alta-performance
+    \item A maioria dos programas precisa de alta-produtividade
+    \item Dos programas que precisam de performance, a maioria se
+      resolve com um \textit{profiler} e otimizações algorítmicas.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+\end{document}

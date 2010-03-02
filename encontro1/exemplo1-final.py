@@ -34,12 +34,35 @@ class BolaV(pygame.sprite.Sprite):
 		self.rect.centery = y
 		self.cor = "vermelho"
 
+class Target(pygame.sprite.Sprite):
+	def __init__(self,x,y):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.image.load("x.png")
+		self.rect  = self.image.get_rect()
+		self.rect.centerx = x
+		self.rect.centery = y
+		self.estado = False
+
 
 
 clock = pygame.time.Clock()
 lista = [] 
 bola = Bola(150, 150)
 bola2 = Bola(400,50)
+
+target1 = Target(20,20)
+target2 = Target(width-20,20)
+target3 = Target(20,height-20)
+target4 = Target(width-20,height-20)
+
+
+
+lista.append(target1)
+lista.append(target2)
+lista.append(target3)
+lista.append(target4)
+
+
 lista.append(bola)
 lista.append(bola2)
 lista.append(Bola(60,300)) 
@@ -70,27 +93,28 @@ while 1:
 	
 
 	for i in lista:
-		if i.cor == "vermelho":
-			if pressed_keys[pygame.K_RIGHT]:
-				i.rect.centerx = i.rect.centerx + 5
-			if pressed_keys[pygame.K_LEFT]:
-				i.rect.centerx = i.rect.centerx - 5
-			if pressed_keys[pygame.K_UP]:
-				i.rect.centery = i.rect.centery - 5
-			if pressed_keys[pygame.K_DOWN]:
-				i.rect.centery = i.rect.centery + 5
+		if i.__class__.__name__ == 'Bola' or i.__class__.__name__ == 'BolaV': 
+			if i.cor == "vermelho":
+				if pressed_keys[pygame.K_RIGHT]:
+					i.rect.centerx = i.rect.centerx + 5
+				if pressed_keys[pygame.K_LEFT]:
+					i.rect.centerx = i.rect.centerx - 5
+				if pressed_keys[pygame.K_UP]:
+					i.rect.centery = i.rect.centery - 5
+				if pressed_keys[pygame.K_DOWN]:
+					i.rect.centery = i.rect.centery + 5
 			
+			if i.cor == "azul":
+						i.rect.centery = i.rect.centery + i.acey
+						if i.rect.centery < 400:
+							i.acey = i.acey + grav
+						else:
+							i.acey = i.acey*-1
 			if pos_wii:
 				i.rect.centerx = pos_wii[0]
 				i.rect.centery = 600-pos_wii[1]
 
-		if i.cor == "azul":
-					i.rect.centery = i.rect.centery + i.acey
-					if i.rect.centery < 400:
-						i.acey = i.acey + grav
-					else:
-						i.acey = i.acey*-1
-		
+	
 			 
 		screen.blit(i.image,i.rect)
 
