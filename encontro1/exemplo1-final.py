@@ -8,7 +8,7 @@ w.rpt_mode = cwiid.RPT_IR
 
 pygame.init()                                                # Inicializa esses modulos
 
-size = width, height = 1024, 600
+size = width, height = 1024, 800
 grav = 0.01
 color = 255, 255, 255                                        # Define a cor de fundo da tela
 screen = pygame.display.set_mode(size)                       # Inicializa a janela onde rola o game 

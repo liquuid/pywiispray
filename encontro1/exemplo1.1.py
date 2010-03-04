@@ -29,9 +29,19 @@ clock = pygame.time.Clock()
 lista = [] 
 bola = Bola(150, 150)
 bola2 = Bola(50,100)
+bola3 = Bola(400, 200)
+bola4 = Bola(100,300)
 lista.append(bola)
 lista.append(bola2)
+lista.append(bola3)
+lista.append(bola4)
 
+for bolinha in xrange(5):
+	lista.append(Bola( random.randrange(0,width), random.randrange(0 , height )))
+
+
+som = pygame.mixer.Sound("jump.wav")
+#mousepos = ""
 while 1:                   
 	clock.tick(60)					     # Loop principal do game 
 
@@ -50,9 +60,28 @@ while 1:
 	
 
 	for i in lista:
-		#print i.rect.x 
-		#i.rect.x = i.rect.x + 1		
-		#screen.blit(i.image,i.rect)
+		"""
+		i.rect.x = i.rect.x + 1
+		i.rect.y = i.rect.y + 4
+			
+		if pressed_keys[pygame.K_LEFT]:
+			i.rect.x -= 2
+		if pressed_keys[pygame.K_RIGHT]:
+			i.rect.x += 2
+
+		if i.rect.x > width:
+			i.rect.x = 0		
+		if i.rect.y > height:
+			i.rect.y = 0		
+			print "tlim"
+			som.play(0)
+		"""	
+		mousepos = pygame.mouse.get_pos()		
+		print mousepos	
+		i.rect.x = mousepos[0] - i.rect.size[0]/2
+		i.rect.y = mousepos[1] - i.rect.size[1]/2
+	
+		screen.blit(i.image,i.rect)
 
 	pygame.display.flip()                                # Envia o que foi desenhado para o monitor 
 
