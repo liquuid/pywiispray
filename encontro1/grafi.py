@@ -3,9 +3,9 @@
 import sys, pygame, random                                   # Importa os modulos do pygame
 import cwiid
 
-#print 'Pressione 1 + 2 no wiimote'
-#w = cwiid.Wiimote()
-#w.rpt_mode = cwiid.RPT_IR 
+print 'Pressione 1 + 2 no wiimote'
+w = cwiid.Wiimote()
+w.rpt_mode = cwiid.RPT_IR 
 
 pygame.init()                                                # Inicializa esses modulos
 
@@ -14,15 +14,15 @@ size = width, height = 640, 480
 color = 255, 255, 255                                        # Define a cor de fundo da tela
 screen = pygame.display.set_mode(size)                       # Inicializa a janela onde rola o game 
 
-
-#cursor = pygame.image.load("arrow.png")
-
-
+ts = pygame.mixer.Sound("ts.wav")
 class Cursor(pygame.sprite.Sprite):
 	
 	def __init__(self,x,y):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load("br_large.png")
+		self.image = pygame.transform.scale(pygame.image.load("br_large.png"),[32,32])
+
+		self.image_orig = self.image
+		#self.image = self.image.set_palette([255,0,0])
 		self.rect  = self.image.get_rect()
 		self.rect.centerx = x
 		self.rect.centery = y
@@ -37,15 +37,9 @@ class Target(pygame.sprite.Sprite):
                 self.rect.centery = y
                 self.estado = False
 
-def eme(a,b):
-	print b[1],a[1],b[0],a[0]
-	return ( b[1]-a[1] ) / float((b[0] - a[0])) 
-	
-
 clock = pygame.time.Clock()
 lista = [] 
 cursor = Cursor(0, 0)
-#cursor.image = pygame.image.load("bola.png")
 
 target1 = Target(20,20)
 target2 = Target(width-20,20)
@@ -57,7 +51,8 @@ lista.append(target1)
 pcount=0
 tcount=0
 coords=[]
-screen.fill(color)     
+#screen.fill(color)     
+wall = pygame.image.load("wall_1.jpg")
 
 while 1:                   
 	clock.tick(6000)	     # Loop principal do game 
@@ -69,13 +64,19 @@ while 1:
 
 	if pressed_keys[pygame.K_ESCAPE]:
 		sys.exit()
+	if pressed_keys[pygame.K_f]:
+		pygame.display.toggle_fullscreen()
+	if pressed_keys[pygame.K_SPACE]:
+		screen.blit(wall,[0,0])
+
+	 
 
 	pos_wii=[]
         try:
-                #pos_wii = w.state['ir_src'][0]['pos']
-		if pygame.mouse.get_pressed()[0]:
-			pos_wii= pygame.mouse.get_pos()
-			print pos_wii
+                pos_wii = w.state['ir_src'][0]['pos']
+	#	if pygame.mouse.get_pressed()[0]:
+	#		pos_wii= pygame.mouse.get_pos()
+	#		cursor.image = pygame.transform.rotate(cursor.image_orig,random.randrange(0,89))
 		if pcount == 20:
 			print 'gotcha !  '+str(pos_wii)
 			coords.append(pos_wii)
@@ -89,23 +90,8 @@ while 1:
 			Cx = ( coords[1][0] - coords[0][0])/float(width)
 			Cy = ( coords[0][1] - coords[1][1])/float(height)
 			
-			#Px = -coords[0][0]
-			#Py = -60 
-			
 			lista=[]
-		#	print Cx , Cy
-		
-				
-	#		lista.append(target3)
-
-	#	if tcount == 3:
-	#		target3.image = pygame.image.load("ok.png")
-	#		lista.append(target4)
-
-	#	if tcount == 4:
-	#		target4.image = pygame.image.load("ok.png")
-	#		print coords
-
+			screen.blit(wall,[0,0])
 		
 		pcount = pcount + 1
 		
@@ -128,11 +114,19 @@ while 1:
 		screen.blit(i.image,i.rect)
 	if pos_wii and cursor.__class__.__name__ == "Cursor":
 		try:
-			#cursor.rect.centerx = pos_wii[0] - (coords[1][0] - coords[0][0] )/Cx 
-			#print pos_wii[0] - (coords[1][0] - coords[0][0] )/Cx 
-			#cursor.rect.centery = (768-pos_wii[1] - coords[1][1]) 
-			cursor.rect.centerx = pos_wii[0]
-			cursor.rect.centery = pos_wii[1]
+			cursor.rect.centerx = (pos_wii[0] - coords[0][0])/Cx
+			#print pos_wii[0] - coords[0][0] , 768-pos_wii[1] 
+			cursor.rect.centery = (768-pos_wii[1])/Cy
+			ts.play(0) 
+		#	cursor.rect.centerx = pos_wii[0]
+		#	cursor.rect.centery = pos_wii[1]
+			
+			if cursor.rect.centerx > width :
+				cursor.image = pygame.transform.scale(pygame.image.load("branco/br_littleFat.png"),[32,32])
+			if cursor.rect.centerx < 0  :
+				cursor.image = pygame.transform.scale(pygame.image.load("br_littleFat.png"),[32,32])
+			if cursor.rect.centery > height :
+				screen.blit(wall,[0,0])
 		except:
 			pass
 		screen.blit(cursor.image,cursor.rect)

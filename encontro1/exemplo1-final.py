@@ -71,7 +71,7 @@ lista.append(BolaV(120,120))
 queda = 1.0
 
 while 1:                   
-	clock.tick(60)					     # Loop principal do game 
+	clock.tick(600)					     # Loop principal do game 
 
 
 	for event in pygame.event.get():                     # Verifica eventos do teclado, mouse etc 
@@ -85,10 +85,12 @@ while 1:
 	try:
 		pos_wii = w.state['ir_src'][0]['pos']
 	except TypeError:
-		print 'sem fonte'
+		pass
+		#print 'sem fonte'
 				
-	print pos_wii
-	screen.fill(color)                                   # Preenche a tela com cor de fundo 
+	if pos_wii:
+		print pos_wii
+	#screen.fill(color)                                   # Preenche a tela com cor de fundo 
       
 	
 
@@ -103,13 +105,14 @@ while 1:
 					i.rect.centery = i.rect.centery - 5
 				if pressed_keys[pygame.K_DOWN]:
 					i.rect.centery = i.rect.centery + 5
-			
+			"""	
 			if i.cor == "azul":
 						i.rect.centery = i.rect.centery + i.acey
 						if i.rect.centery < 400:
 							i.acey = i.acey + grav
 						else:
 							i.acey = i.acey*-1
+			"""
 			if pos_wii:
 				i.rect.centerx = pos_wii[0]
 				i.rect.centery = 600-pos_wii[1]
