@@ -9,7 +9,7 @@ import cwiid
 
 pygame.init()                                                # Inicializa esses modulos
 
-size = width, height = 640, 480
+size = width, height = 1024, 600
 
 color = 255, 255, 255                                        # Define a cor de fundo da tela
 screen = pygame.display.set_mode(size)                       # Inicializa a janela onde rola o game 
@@ -22,7 +22,7 @@ class Cursor(pygame.sprite.Sprite):
 	
 	def __init__(self,x,y):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load("br_large.png")
+		self.image = pygame.image.load("preto/br_large.png")
 		self.rect  = self.image.get_rect()
 		self.rect.centerx = x
 		self.rect.centery = y
