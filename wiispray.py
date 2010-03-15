@@ -1,39 +1,64 @@
 #!/usr/bin/env python
 # -*- coding : utf8 -*-
+
+# Bibliotecas para os graficos, wii, numeros randomicos etc...
 import sys
 import pygame
 import random
 import os
 import cwiid
 
+# Pega o diretorio onde o script esta sendo executado e soma a string data
 dpath = os.getcwd()+"/data/"
 
+# apresenta a mensagem inicial de modo grafico
 os.system('zenity --info --text "Pressione 1 + 2 no wiimote e clique em OK"')
 
-w = cwiid.Wiimote()
-w.rpt_mode = cwiid.RPT_IR 
+try:
+	# conecta a biblioteca cwiid com o Wiimote
+	w = cwiid.Wiimote()
+	# coloca o wiimote em modo relatorio de infra vermelho
+	w.rpt_mode = cwiid.RPT_IR 
+except:
+	os.system('zenity --error --text "Tempo esgotado durante a conexao com o wiimote"')
+	sys.exit(1)
 
-pygame.init()                                                # Inicializa esses modulos
 
+# Inicializa esses modulos
+pygame.init()                                          
+
+# Tamanho da tela
 size = width, height = 640, 480
 
-color = 255, 255, 255                                        # Define a cor de fundo da tela
-screen = pygame.display.set_mode(size)                       # Inicializa a janela onde rola o game 
+# Define a cor de fundo da tela
+color = 255, 255, 255
+                    
+# Inicializa a janela onde rola o game 
+screen = pygame.display.set_mode(size)
 
+# Carrega o barulho do jato de tinta na memoria
 ts = pygame.mixer.Sound(dpath+"ts.wav")
+
 class Cursor(pygame.sprite.Sprite):
+	"""
+		Classe cursor cria objetos do tipo cursor, onde sera desenhado o jato de tinta
 	
+		c = Cursor( coordenada x , coordenada y)
+	"""	
 	def __init__(self,x,y):
 		pygame.sprite.Sprite.__init__(self)
 		self.image = pygame.transform.scale(pygame.image.load(dpath+"branco/br_large.png"),[32,32])
-
 		self.image_orig = self.image
 		self.rect  = self.image.get_rect()
 		self.rect.centerx = x
 		self.rect.centery = y
 
 class Target(pygame.sprite.Sprite):
+	"""
+		Classe Targate posiciona o alvo de calibragem na tela
 
+		t = Target( coord x , coord y )
+	"""
         def __init__(self,x,y):
                 pygame.sprite.Sprite.__init__(self)
                 self.image = pygame.image.load(dpath+"x.png")
@@ -42,41 +67,64 @@ class Target(pygame.sprite.Sprite):
                 self.rect.centery = y
                 self.estado = False
 
+# Inicializa o timer interno do pygame
 clock = pygame.time.Clock()
+
+# lista de objetos a serem desenhados na tela
 lista = [] 
+
+# cria objeto a partir da classe cursor
 cursor = Cursor(0, 0)
 
+# cria os objetos alvo
 target1 = Target(20,20)
 target2 = Target(width-20,20)
 target3 = Target(20,height-20)
 target4 = Target(width-20,height-20)
 
+# Adiciona objeto a lista que sera impressa na tela
 lista.append(target1)
 
+# contador de captura de posicao
 pcount=0
+
+# contador de conjuntos de captura
 tcount=0
+
+# lista de coordenadas capturadas
 coords=[]
+
+# preenche o fundo da tela
 screen.fill(color)     
+
+# carrega a imagem de fundo na memoria
 wall = pygame.image.load(dpath+"wall_1.jpg")
 
-while 1:                   
-	clock.tick(6000)	     # Loop principal do game 
-	
-	for event in pygame.event.get():            # Verifica eventos do teclado, mouse etc 
-		if event.type == pygame.QUIT: sys.exit()     # Se o evento for do tipo QUIT encerra
+# loop principal do programa
 
+while 1:              
+	# timer, acelera o clock do programa a 600 CPS, se sua maquina aguentar :)    
+	clock.tick(600)
+	
+	# Verifica eventos do teclado, mouse etc 
+	for event in pygame.event.get():
+		# Se o evento for do tipo QUIT encerra
+		if event.type == pygame.QUIT: sys.exit()    
+	# captura de teclas
 	pressed_keys = pygame.key.get_pressed()
 
+	# Encerra se alguem apertar o ESC
 	if pressed_keys[pygame.K_ESCAPE]:
 		sys.exit()
+	# Fullscreen :)
 	if pressed_keys[pygame.K_f]:
 		pygame.display.toggle_fullscreen()
+	# Limpa o muro
 	if pressed_keys[pygame.K_SPACE]:
 		screen.blit(wall,[0,0])
-
-	 
-
+	# lista com a posicao do wiimote
 	pos_wii=[]
+	# leitura das coordenadas do wiimote
         try:
                 pos_wii = w.state['ir_src'][0]['pos']
 	#	if pygame.mouse.get_pressed()[0]:
@@ -99,14 +147,13 @@ while 1:
 			screen.blit(wall,[0,0])
 		
 		pcount = pcount + 1
-		
-		
 			
         except TypeError:
 		pcount = 0 
 	except ZeroDivisionError:
 		print "ooops x/0"
 	
+	# desenha tudo na tela
 	for i in lista:
 		screen.blit(i.image,i.rect)
 	if pos_wii and cursor.__class__.__name__ == "Cursor":
