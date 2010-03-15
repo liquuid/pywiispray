@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding : utf8 -*-
-import sys, pygame, random                                   # Importa os modulos do pygame
+import sys
+import pygame
+import random
+import os
 import cwiid
 
-print 'Pressione 1 + 2 no wiimote'
+dpath = os.getcwd()+"/data/"
+
+os.system('zenity --info --text "Pressione 1 + 2 no wiimote e clique em OK"')
+
 w = cwiid.Wiimote()
 w.rpt_mode = cwiid.RPT_IR 
 
@@ -14,15 +20,14 @@ size = width, height = 640, 480
 color = 255, 255, 255                                        # Define a cor de fundo da tela
 screen = pygame.display.set_mode(size)                       # Inicializa a janela onde rola o game 
 
-ts = pygame.mixer.Sound("ts.wav")
+ts = pygame.mixer.Sound(dpath+"ts.wav")
 class Cursor(pygame.sprite.Sprite):
 	
 	def __init__(self,x,y):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.transform.scale(pygame.image.load("br_large.png"),[32,32])
+		self.image = pygame.transform.scale(pygame.image.load(dpath+"branco/br_large.png"),[32,32])
 
 		self.image_orig = self.image
-		#self.image = self.image.set_palette([255,0,0])
 		self.rect  = self.image.get_rect()
 		self.rect.centerx = x
 		self.rect.centery = y
@@ -31,7 +36,7 @@ class Target(pygame.sprite.Sprite):
 
         def __init__(self,x,y):
                 pygame.sprite.Sprite.__init__(self)
-                self.image = pygame.image.load("x.png")
+                self.image = pygame.image.load(dpath+"x.png")
                 self.rect  = self.image.get_rect()
                 self.rect.centerx = x
                 self.rect.centery = y
@@ -51,8 +56,8 @@ lista.append(target1)
 pcount=0
 tcount=0
 coords=[]
-#screen.fill(color)     
-wall = pygame.image.load("wall_1.jpg")
+screen.fill(color)     
+wall = pygame.image.load(dpath+"wall_1.jpg")
 
 while 1:                   
 	clock.tick(6000)	     # Loop principal do game 
@@ -78,15 +83,15 @@ while 1:
 	#		pos_wii= pygame.mouse.get_pos()
 	#		cursor.image = pygame.transform.rotate(cursor.image_orig,random.randrange(0,89))
 		if pcount == 20:
-			print 'gotcha !  '+str(pos_wii)
+			#print 'gotcha !  '+str(pos_wii)
 			coords.append(pos_wii)
 			tcount = tcount + 1
 		if tcount == 1:
-			target1.image = pygame.image.load("ok.png")
+			target1.image = pygame.image.load(dpath+"ok.png")
 			lista.append(target4)
 			
 		if tcount == 2:
-			target4.image = pygame.image.load("ok.png")
+			target4.image = pygame.image.load(dpath+"ok.png")
 			Cx = ( coords[1][0] - coords[0][0])/float(width)
 			Cy = ( coords[0][1] - coords[1][1])/float(height)
 			
@@ -102,14 +107,6 @@ while 1:
 	except ZeroDivisionError:
 		print "ooops x/0"
 	
-
-	#screen.fill(color)                                   # Preenche a tela com cor de fundo 
-	try:    
-		pass  
-		#print Cx, Cy , pos_wii[0]*Cx , pos_wii[1]*Cy
-	except:
-		pass	
-	
 	for i in lista:
 		screen.blit(i.image,i.rect)
 	if pos_wii and cursor.__class__.__name__ == "Cursor":
@@ -122,9 +119,9 @@ while 1:
 		#	cursor.rect.centery = pos_wii[1]
 			
 			if cursor.rect.centerx > width :
-				cursor.image = pygame.transform.scale(pygame.image.load("branco/br_littleFat.png"),[32,32])
+				cursor.image = pygame.transform.scale(pygame.image.load(dpath+"branco/br_littleFat.png"),[32,32])
 			if cursor.rect.centerx < 0  :
-				cursor.image = pygame.transform.scale(pygame.image.load("br_littleFat.png"),[32,32])
+				cursor.image = pygame.transform.scale(pygame.image.load(dpath+"preto/br_littleFat.png"),[32,32])
 			if cursor.rect.centery > height :
 				screen.blit(wall,[0,0])
 		except:
