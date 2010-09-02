@@ -1,7 +1,7 @@
 Dependencias :
 
-cwiid-python
+python-cwiid
 python-pygame
-zenith
+zenity
 
 Enjoy :)
